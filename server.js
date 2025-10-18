@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 // CORS configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://fitness-tracker-xyz.vercel.app']
+    ? [process.env.FRONTEND_URL || 'https://fit-tracker-live.vercel.app']
     : ['http://localhost:3000', 'http://192.168.1.35:3000'],
   credentials: true,
   optionsSuccessStatus: 200
