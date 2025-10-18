@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 import {
   Container,
   Grid,
@@ -8,7 +8,9 @@ import {
   Box,
   Card,
   CardContent,
-  CircularProgress
+  CircularProgress,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   FitnessCenter,
@@ -178,10 +180,12 @@ const StatCard = ({ title, value, icon, color = 'primary', subtitle }) => (
 );
 
 const Dashboard = () => {
-  const { darkMode } = useTheme();
+  const { darkMode } = useCustomTheme();
   const [dashboardData, setDashboardData] = useState(null);
   const [workoutAnalytics, setWorkoutAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -255,12 +259,12 @@ const Dashboard = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        position: isMobile ? 'bottom' : 'top',
         labels: {
           usePointStyle: true,
-          padding: 20,
+          padding: isMobile ? 10 : 20,
           font: {
-            size: 14,
+            size: isMobile ? 12 : 14,
             weight: 'bold'
           },
           color: darkMode ? '#ffffff' : '#2C3E50'
@@ -270,10 +274,10 @@ const Dashboard = () => {
         display: true,
         text: 'Weekly Workout Trends',
         font: {
-          size: 18,
+          size: isMobile ? 16 : 18,
           weight: 'bold'
         },
-        padding: 20,
+        padding: isMobile ? 10 : 20,
         color: darkMode ? '#ffffff' : '#2C3E50'
       }
     },
@@ -285,9 +289,10 @@ const Dashboard = () => {
         ticks: {
           font: {
             weight: 'bold',
-            size: 12
+            size: isMobile ? 10 : 12
           },
-          color: darkMode ? '#ffffff' : '#2C3E50'
+          color: darkMode ? '#ffffff' : '#2C3E50',
+          maxRotation: isMobile ? 45 : 0
         }
       },
       y: {
@@ -299,7 +304,7 @@ const Dashboard = () => {
           text: 'Number of Workouts',
           font: {
             weight: 'bold',
-            size: 14
+            size: isMobile ? 12 : 14
           },
           color: darkMode ? '#ffffff' : '#2C3E50'
         },
@@ -309,7 +314,8 @@ const Dashboard = () => {
         ticks: {
           color: darkMode ? '#ffffff' : '#2C3E50',
           font: {
-            weight: 'bold'
+            weight: 'bold',
+            size: isMobile ? 10 : 12
           }
         }
       },
@@ -322,7 +328,7 @@ const Dashboard = () => {
           text: 'Calories Burned',
           font: {
             weight: 'bold',
-            size: 14
+            size: isMobile ? 12 : 14
           },
           color: darkMode ? '#ffffff' : '#2C3E50'
         },
@@ -332,7 +338,8 @@ const Dashboard = () => {
         ticks: {
           color: darkMode ? '#ffffff' : '#2C3E50',
           font: {
-            weight: 'bold'
+            weight: 'bold',
+            size: isMobile ? 10 : 12
           }
         }
       }
@@ -344,15 +351,15 @@ const Dashboard = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: isMobile ? 2 : 4, px: isMobile ? 1 : 3 }}>
       <Box sx={{ 
         background: darkMode 
           ? 'rgba(255, 255, 255, 0.1)'
           : 'linear-gradient(135deg, #2ECC71 0%, #3498DB 100%)',
         backdropFilter: 'blur(20px)',
         borderRadius: 4,
-        p: 4,
-        mb: 4,
+        p: isMobile ? 2 : 4,
+        mb: isMobile ? 2 : 4,
         color: 'white',
         textAlign: 'center',
         border: darkMode 
@@ -382,12 +389,12 @@ const Dashboard = () => {
       }}>
         <Box sx={{ position: 'relative', zIndex: 1 }}>
           <Typography 
-            variant="h2" 
+            variant={isMobile ? "h3" : "h2"}
             gutterBottom 
             sx={{ 
               fontWeight: 800,
               color: 'white',
-              mb: 2,
+              mb: isMobile ? 1 : 2,
               textShadow: '0 2px 8px rgba(0,0,0,0.3)',
               filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
             }}
@@ -395,7 +402,7 @@ const Dashboard = () => {
             🏋️ Fitness Dashboard
           </Typography>
           <Typography 
-            variant="h5" 
+            variant={isMobile ? "h6" : "h5"}
             sx={{ 
               color: 'rgba(255, 255, 255, 0.95)',
               fontWeight: 500,
@@ -408,7 +415,7 @@ const Dashboard = () => {
         </Box>
       </Box>
       
-      <Grid container spacing={3}>
+      <Grid container spacing={isMobile ? 2 : 3}>
         {/* Stats Cards */}
         <Grid item xs={12} sm={6} md={3}>
           <StatCard
@@ -498,13 +505,13 @@ const Dashboard = () => {
               </Typography>
               {trendData?.length > 0 ? (
                 <Box sx={{ 
-                  height: 400, 
+                  height: isMobile ? 300 : 400, 
                   mt: 2,
                   background: darkMode 
                     ? 'rgba(255, 255, 255, 0.05)'
                     : 'rgba(255, 255, 255, 0.8)',
                   borderRadius: 3,
-                  p: 3,
+                  p: isMobile ? 2 : 3,
                   border: darkMode 
                     ? '1px solid rgba(255, 255, 255, 0.1)'
                     : '1px solid rgba(46, 204, 113, 0.1)',

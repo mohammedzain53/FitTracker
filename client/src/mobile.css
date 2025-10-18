@@ -1,0 +1,132 @@
+/* Mobile-specific styles for FitTracker */
+
+/* Ensure touch targets are at least 44px */
+@media (max-width: 768px) {
+  .MuiButton-root {
+    min-height: 44px !important;
+  }
+  
+  .MuiIconButton-root {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+  
+  .MuiTextField-root {
+    margin-bottom: 16px;
+  }
+  
+  /* Improve chart readability on mobile */
+  .chart-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Better spacing for mobile cards */
+  .MuiCard-root {
+    margin-bottom: 16px;
+  }
+  
+  /* Improve form field spacing */
+  .MuiFormControl-root {
+    margin-bottom: 16px;
+  }
+  
+  /* Better drawer animation */
+  .MuiDrawer-paper {
+    transition: transform 0.3s ease-in-out !important;
+  }
+  
+  /* Improve navbar touch targets */
+  .MuiAppBar-root .MuiToolbar-root {
+    min-height: 64px !important;
+  }
+  
+  /* Better mobile typography */
+  .MuiTypography-h1 {
+    font-size: 1.75rem !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  .MuiTypography-h3 {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Improve mobile grid spacing */
+  .MuiGrid-container {
+    margin: -8px !important;
+  }
+  
+  .MuiGrid-item {
+    padding: 8px !important;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+  .MuiContainer-root {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+  
+  .MuiPaper-root {
+    padding: 16px !important;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .MuiTypography-h4 {
+    font-size: 1.25rem !important;
+  }
+  
+  .MuiTypography-h5 {
+    font-size: 1.125rem !important;
+  }
+  
+  .MuiTypography-h6 {
+    font-size: 1rem !important;
+  }
+  
+  /* Compact form fields */
+  .MuiTextField-root .MuiInputBase-root {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Better button sizing */
+  .MuiButton-root {
+    font-size: 0.875rem !important;
+    padding: 8px 16px !important;
+  }
+}
+
+/* Touch-friendly hover states for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .MuiButton-root:hover,
+  .MuiIconButton-root:hover,
+  .MuiChip-root:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .MuiButton-root:active,
+  .MuiIconButton-root:active {
+    transform: scale(0.95) !important;
+  }
+}
+
+/* Improve scroll behavior */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better focus indicators for accessibility */
+.MuiButton-root:focus-visible,
+.MuiIconButton-root:focus-visible,
+.MuiTextField-root:focus-within {
+  outline: 2px solid #1976d2 !important;
+  outline-offset: 2px !important;
+}

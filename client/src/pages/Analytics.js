@@ -10,7 +10,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  CircularProgress
+  CircularProgress,
+  useMediaQuery,
+  useTheme as useMuiTheme
 } from '@mui/material';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
@@ -42,6 +44,8 @@ ChartJS.register(
 
 const Analytics = () => {
   const { darkMode } = useTheme();
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
   const [workoutAnalytics, setWorkoutAnalytics] = useState(null);
   const [healthAnalytics, setHealthAnalytics] = useState(null);
   const [period, setPeriod] = useState('30');
@@ -244,22 +248,22 @@ const Analytics = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Typography variant="h4" component="h1">
+    <Container maxWidth="lg" sx={{ mt: isMobile ? 2 : 4, mb: 4, px: isMobile ? 1 : 3 }}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={isMobile ? 2 : 4} flexWrap="wrap" gap={2}>
+        <Typography variant={isMobile ? "h5" : "h4"} component="h1">
           Analytics & Insights
         </Typography>
-        <FormControl sx={{ minWidth: 120 }}>
+        <FormControl sx={{ minWidth: isMobile ? 100 : 120 }} size={isMobile ? "small" : "medium"}>
           <InputLabel>Period</InputLabel>
           <Select
             value={period}
             label="Period"
             onChange={(e) => setPeriod(e.target.value)}
           >
-            <MenuItem value="7">Last 7 days</MenuItem>
-            <MenuItem value="30">Last 30 days</MenuItem>
-            <MenuItem value="90">Last 90 days</MenuItem>
-            <MenuItem value="365">Last year</MenuItem>
+            <MenuItem value="7">7 days</MenuItem>
+            <MenuItem value="30">30 days</MenuItem>
+            <MenuItem value="90">90 days</MenuItem>
+            <MenuItem value="365">1 year</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -268,12 +272,12 @@ const Analytics = () => {
         {/* Summary Stats */}
         <Grid item xs={12}>
           <Paper sx={{ 
-            p: 5, 
+            p: isMobile ? 2 : 5, 
             background: darkMode 
               ? 'linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)'
               : 'linear-gradient(135deg, #2ECC71 0%, #3498DB 50%, #9B59B6 100%)',
             color: 'white',
-            borderRadius: 4,
+            borderRadius: isMobile ? 3 : 4,
             boxShadow: darkMode 
               ? '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(255, 23, 68, 0.2)'
               : '0 20px 60px rgba(46, 204, 113, 0.3), 0 0 40px rgba(52, 152, 219, 0.2)',
@@ -301,26 +305,27 @@ const Analytics = () => {
             },
           }}>
             <Box sx={{ position: 'relative', zIndex: 1 }}>
-              <Typography variant="h3" gutterBottom sx={{ 
+              <Typography variant={isMobile ? "h5" : "h4"} gutterBottom sx={{ 
                 fontWeight: 800, 
                 textAlign: 'center', 
-                mb: 5,
+                mb: isMobile ? 3 : 4,
                 textShadow: '0 3px 6px rgba(0,0,0,0.3)',
                 background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+                fontSize: isMobile ? '1.5rem' : '2rem',
               }}>
                 📊 Analytics Summary ({period} days)
               </Typography>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={6} md={3}>
+              <Grid container spacing={isMobile ? 2 : 4}>
+                <Grid item xs={6} sm={6} md={3}>
                   <Box textAlign="center" sx={{ 
-                    p: 4, 
+                    p: isMobile ? 2 : 4, 
                     background: darkMode 
                       ? 'linear-gradient(145deg, rgba(255, 23, 68, 0.2), rgba(255, 23, 68, 0.1))'
                       : 'linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))', 
-                    borderRadius: 3,
+                    borderRadius: isMobile ? 2 : 3,
                     backdropFilter: 'blur(20px)',
                     border: darkMode 
                       ? '1px solid rgba(255, 23, 68, 0.3)'
@@ -330,40 +335,42 @@ const Analytics = () => {
                       : '0 8px 25px rgba(255, 255, 255, 0.2)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      transform: 'translateY(-5px) scale(1.02)',
+                      transform: isMobile ? 'scale(1.02)' : 'translateY(-5px) scale(1.02)',
                       boxShadow: darkMode 
                         ? '0 15px 35px rgba(255, 23, 68, 0.3)'
                         : '0 15px 35px rgba(255, 255, 255, 0.3)',
                     },
                   }}>
-                    <Typography variant="h1" sx={{ 
+                    <Typography variant={isMobile ? "h3" : "h2"} sx={{ 
                       fontWeight: 900, 
-                      mb: 2,
+                      mb: isMobile ? 1 : 2,
                       background: darkMode 
                         ? 'linear-gradient(135deg, #FF1744 0%, #FFD600 100%)'
                         : 'linear-gradient(135deg, #ffffff 0%, #FF6B35 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '2rem' : '2.5rem',
                     }}>
                       {workoutAnalytics?.summary?.totalWorkouts || 0}
                     </Typography>
-                    <Typography variant="h6" sx={{ 
+                    <Typography variant={isMobile ? "body2" : "body1"} sx={{ 
                       fontWeight: 600,
                       color: 'rgba(255, 255, 255, 0.9)',
                       textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '0.75rem' : '1rem',
                     }}>
                       Total Workouts
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={6} sm={6} md={3}>
                   <Box textAlign="center" sx={{ 
-                    p: 4, 
+                    p: isMobile ? 2 : 4, 
                     background: darkMode 
                       ? 'linear-gradient(145deg, rgba(192, 192, 192, 0.2), rgba(192, 192, 192, 0.1))'
                       : 'linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))', 
-                    borderRadius: 3,
+                    borderRadius: isMobile ? 2 : 3,
                     backdropFilter: 'blur(20px)',
                     border: darkMode 
                       ? '1px solid rgba(192, 192, 192, 0.3)'
@@ -373,40 +380,42 @@ const Analytics = () => {
                       : '0 8px 25px rgba(255, 255, 255, 0.2)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      transform: 'translateY(-5px) scale(1.02)',
+                      transform: isMobile ? 'scale(1.02)' : 'translateY(-5px) scale(1.02)',
                       boxShadow: darkMode 
                         ? '0 15px 35px rgba(192, 192, 192, 0.3)'
                         : '0 15px 35px rgba(255, 255, 255, 0.3)',
                     },
                   }}>
-                    <Typography variant="h1" sx={{ 
+                    <Typography variant={isMobile ? "h3" : "h2"} sx={{ 
                       fontWeight: 900, 
-                      mb: 2,
+                      mb: isMobile ? 1 : 2,
                       background: darkMode 
                         ? 'linear-gradient(135deg, #C0C0C0 0%, #FFD600 100%)'
                         : 'linear-gradient(135deg, #ffffff 0%, #FF6B35 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '2rem' : '2.5rem',
                     }}>
                       {workoutAnalytics?.summary?.totalCalories || 0}
                     </Typography>
-                    <Typography variant="h6" sx={{ 
+                    <Typography variant={isMobile ? "body2" : "body1"} sx={{ 
                       fontWeight: 600,
                       color: 'rgba(255, 255, 255, 0.9)',
                       textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '0.75rem' : '1rem',
                     }}>
                       Calories Burned
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={6} sm={6} md={3}>
                   <Box textAlign="center" sx={{ 
-                    p: 4, 
+                    p: isMobile ? 2 : 4, 
                     background: darkMode 
                       ? 'linear-gradient(145deg, rgba(255, 214, 0, 0.2), rgba(255, 214, 0, 0.1))'
                       : 'linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))', 
-                    borderRadius: 3,
+                    borderRadius: isMobile ? 2 : 3,
                     backdropFilter: 'blur(20px)',
                     border: darkMode 
                       ? '1px solid rgba(255, 214, 0, 0.3)'
@@ -416,40 +425,42 @@ const Analytics = () => {
                       : '0 8px 25px rgba(255, 255, 255, 0.2)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      transform: 'translateY(-5px) scale(1.02)',
+                      transform: isMobile ? 'scale(1.02)' : 'translateY(-5px) scale(1.02)',
                       boxShadow: darkMode 
                         ? '0 15px 35px rgba(255, 214, 0, 0.3)'
                         : '0 15px 35px rgba(255, 255, 255, 0.3)',
                     },
                   }}>
-                    <Typography variant="h1" sx={{ 
+                    <Typography variant={isMobile ? "h3" : "h2"} sx={{ 
                       fontWeight: 900, 
-                      mb: 2,
+                      mb: isMobile ? 1 : 2,
                       background: darkMode 
                         ? 'linear-gradient(135deg, #FFD600 0%, #FF1744 100%)'
                         : 'linear-gradient(135deg, #ffffff 0%, #FF6B35 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '2rem' : '2.5rem',
                     }}>
                       {Math.round((workoutAnalytics?.summary?.totalDuration || 0) / 60)}
                     </Typography>
-                    <Typography variant="h6" sx={{ 
+                    <Typography variant={isMobile ? "body2" : "body1"} sx={{ 
                       fontWeight: 600,
                       color: 'rgba(255, 255, 255, 0.9)',
                       textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '0.75rem' : '1rem',
                     }}>
                       Hours Exercised
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={6} sm={6} md={3}>
                   <Box textAlign="center" sx={{ 
-                    p: 4, 
+                    p: isMobile ? 2 : 4, 
                     background: darkMode 
                       ? 'linear-gradient(145deg, rgba(255, 23, 68, 0.15), rgba(192, 192, 192, 0.15))'
                       : 'linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))', 
-                    borderRadius: 3,
+                    borderRadius: isMobile ? 2 : 3,
                     backdropFilter: 'blur(20px)',
                     border: darkMode 
                       ? '1px solid rgba(255, 23, 68, 0.2)'
@@ -459,28 +470,30 @@ const Analytics = () => {
                       : '0 8px 25px rgba(255, 255, 255, 0.2)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      transform: 'translateY(-5px) scale(1.02)',
+                      transform: isMobile ? 'scale(1.02)' : 'translateY(-5px) scale(1.02)',
                       boxShadow: darkMode 
                         ? '0 15px 35px rgba(255, 23, 68, 0.25)'
                         : '0 15px 35px rgba(255, 255, 255, 0.3)',
                     },
                   }}>
-                    <Typography variant="h1" sx={{ 
+                    <Typography variant={isMobile ? "h3" : "h2"} sx={{ 
                       fontWeight: 900, 
-                      mb: 2,
+                      mb: isMobile ? 1 : 2,
                       background: darkMode 
                         ? 'linear-gradient(135deg, #FF1744 0%, #C0C0C0 100%)'
                         : 'linear-gradient(135deg, #ffffff 0%, #FF6B35 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '2rem' : '2.5rem',
                     }}>
                       {Math.round(workoutAnalytics?.summary?.avgCaloriesPerWorkout || 0)}
                     </Typography>
-                    <Typography variant="h6" sx={{ 
+                    <Typography variant={isMobile ? "body2" : "body1"} sx={{ 
                       fontWeight: 600,
                       color: 'rgba(255, 255, 255, 0.9)',
                       textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                      fontSize: isMobile ? '0.75rem' : '1rem',
                     }}>
                       Avg Cal/Workout
                     </Typography>
