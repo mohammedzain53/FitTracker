@@ -8,8 +8,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Switch,
-  FormControlLabel,
   Avatar,
   Chip,
   Drawer,

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Paper, Tooltip, Grid } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Box, Typography, Paper, Tooltip } from '@mui/material';
 import { useTheme } from '../contexts/ThemeContext';
 import axios from 'axios';
 
@@ -10,6 +10,7 @@ const WorkoutHeatmap = () => {
 
   useEffect(() => {
     fetchHeatmapData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchHeatmapData = async () => {

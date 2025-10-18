@@ -495,7 +495,6 @@ const WorkoutDialog = ({ open, onClose, workout, onSave }) => {
 };
 
 const Workouts = () => {
-  const { darkMode } = useTheme();
   const [workouts, setWorkouts] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingWorkout, setEditingWorkout] = useState(null);
